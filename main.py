@@ -5,14 +5,15 @@ from secrets import client_id as id, oauth_token as oauth
 import datetime
 
 client = TwitchClient(id, oauth)
-clip = client.get_clip("KawaiiLivelySpindleMVGame")
+clip_slug = input("Enter clip slug: ")
+clip = client.get_clip(clip_slug)
 offset = clip['vod']['offset']
 op_vod = client.get_video(clip['vod']['id'])
 print('op_vod: {}'.format(clip['vod']['id']))
 vod_creation = parser.parse(op_vod['created_at'])
 clip_time = vod_creation + datetime.timedelta(seconds=offset)
 
-new_user = 'trainwreckstv'
+new_user = input("Enter streamer: ")
 new_user_vods = client.get_user_vods(new_user)
 
 found_vod = None

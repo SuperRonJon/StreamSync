@@ -52,4 +52,6 @@ for user in user_list:
         print("{}: {}".format(user, output))
     else:
         print("No vod found for {}".format(user))
+
+input("Press Enter to continue...")
     

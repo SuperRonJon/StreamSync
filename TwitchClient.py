@@ -25,12 +25,18 @@ class TwitchClient:
         url = "https://api.twitch.tv/kraken/users?login={}".format(username)
         request = requests.get(url, headers=self.headers)
         response = request.json()
-        return response['users'][0]['_id']
+        if response['_total'] > 0:
+            return response['users'][0]['_id']
+        else:
+            return None
 
     def get_user_vods(self, username, limit=50):
         user_id = self.get_user_id(username)
-        url = "https://api.twitch.tv/kraken/channels/{}/videos?limit={}&broadcast_type=archive".format(user_id, limit)
-        request = requests.get(url, headers=self.headers)
-        response = request.json()
-        return response['videos']
+        if user_id:
+            url = "https://api.twitch.tv/kraken/channels/{}/videos?limit={}&broadcast_type=archive".format(user_id, limit)
+            request = requests.get(url, headers=self.headers)
+            response = request.json()
+            return response['videos']
+        else:
+            return None
 

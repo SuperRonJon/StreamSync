@@ -15,6 +15,8 @@ def get_time_from_offset(vod, offset):
 
 def get_timestamp_for_streamer(streamer, clip_time):
     streamer_vods = client.get_user_vods(streamer)
+    if streamer_vods is None:
+        return None
     found_vod = None
 
     for vod in streamer_vods:
@@ -34,22 +36,27 @@ def get_timestamp_for_streamer(streamer, clip_time):
         output_url = "https://www.twitch.tv/videos/{}?t={}h{}m{}s".format(found_vod['_id'][1:], hours, minutes, seconds)
         return output_url
     else:
-        print('Could not find vod for {}'.format(streamer))
-        return None
+        return ""
 
 
 clip_slug = input("Enter clip slug: ")
 clip = client.get_clip(clip_slug)
-offset = clip['vod']['offset']
-op_vod = client.get_video(clip['vod']['id'])
-clip_time = get_time_from_offset(op_vod, offset)
+if not 'error' in clip:
+    offset = clip['vod']['offset']
+    op_vod = client.get_video(clip['vod']['id'])
+    clip_time = get_time_from_offset(op_vod, offset)
 
-new_users = input("Enter streamers: ")
-user_list = new_users.split()
-for user in user_list:
-    output = get_timestamp_for_streamer(user, clip_time)
-    if output:
-        print("{}: {}".format(user, output))
-    else:
-        print("No vod found for {}".format(user))
+    new_users = input("Enter streamers: ")
+    user_list = new_users.split()
+    for user in user_list:
+        output = get_timestamp_for_streamer(user, clip_time)
+        if output is not None:
+            if output:
+                print("{}: {}".format(user, output))
+            else:
+                print("{}: No vod found".format(user))
+        else:
+            print("{}: Unable to find channel".format(user))
+else:
+    print(clip['message'])
     

@@ -41,7 +41,7 @@ def get_timestamp_for_streamer(streamer, clip_time):
 
 clip_slug = input("Enter clip slug: ")
 clip = client.get_clip(clip_slug)
-if not 'error' in clip:
+if not 'error' in clip and clip['vod'] is not None:
     offset = clip['vod']['offset']
     op_vod = client.get_video(clip['vod']['id'])
     clip_time = get_time_from_offset(op_vod, offset)
@@ -58,5 +58,8 @@ if not 'error' in clip:
         else:
             print("{}: Unable to find channel".format(user))
 else:
-    print(clip['message'])
+    if 'message' in clip:
+        print(clip['message'])
+    else:
+        print('Error reading clip. Try agian in a bit.')
     

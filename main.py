@@ -63,4 +63,5 @@ else:
         print(clip['message'])
     else:
         print('Error reading clip. Try agian in a bit.')
+    input("Press Enter to continue...")
     

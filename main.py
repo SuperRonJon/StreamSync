@@ -8,11 +8,19 @@ import datetime
 client = TwitchClient(id, oauth)
 
 
+# Returns the real-world time that the clip occured at
+# @param vod: vod json data as returned from TwitchClient
+# @param offset: the number of seconds into the vod that the clip occured at
 def get_time_from_offset(vod, offset):
     vod_creation = parser.parse(vod['created_at'])
     return vod_creation + datetime.timedelta(seconds=offset)
 
 
+# Returns the timestamped URL for specified streamer at the given time
+# @param streamer: the username of the streamer desired
+# @param clip_time: the real-world time that the timestamp should occur at
+# @return None: Returns none if the channel was unable to be found
+# @return Returns empty string if the vod for that time-period does not exist
 def get_timestamp_for_streamer(streamer, clip_time):
     streamer_vods = client.get_user_vods(streamer)
     if streamer_vods is None:

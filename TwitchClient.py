@@ -13,12 +13,18 @@ class TwitchClient:
     def get_clip(self, clip_slug):
         url = "https://api.twitch.tv/helix/clips?id={}".format(clip_slug)
         request = requests.get(url, headers=self.headers)
-        return request.json()['data'][0]
+        if len(request.json()['data']) > 0:
+            return request.json()['data'][0]
+        else:
+            return None
 
     def get_video(self, video_id):
         url = "https://api.twitch.tv/helix/videos/?id={}".format(video_id)
         request = requests.get(url, headers=self.headers)
-        return request.json()['data'][0]
+        if len(request.json()['data']) > 0:
+            return request.json()['data'][0]
+        else: 
+            return None
 
     def get_user_id(self, username):
         url = "https://api.twitch.tv/helix/users?login={}".format(username)

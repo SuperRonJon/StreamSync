@@ -51,27 +51,27 @@ def get_timestamp_for_streamer(streamer, clip_time):
 
 clip_slug = input("Enter clip slug: ")
 clip = client.get_clip(clip_slug)
-if not 'error' in clip and clip['video_id']:
+if clip is not None and clip['video_id']:
     offset = clip['vod_offset']
     op_vod = client.get_video(clip['video_id'])
-    clip_time = get_time_from_offset(op_vod, offset)
+    if op_vod is not None:
+        clip_time = get_time_from_offset(op_vod, offset)
 
-    new_users = input("Enter streamers: ")
-    user_list = new_users.split()
-    for user in user_list:
-        output = get_timestamp_for_streamer(user, clip_time)
-        if output is not None:
-            if output:
-                print("{}: {}".format(user, output))
+        new_users = input("Enter streamers: ")
+        user_list = new_users.split()
+        for user in user_list:
+            output = get_timestamp_for_streamer(user, clip_time)
+            if output is not None:
+                if output:
+                    print("{}: {}".format(user, output))
+                else:
+                    print("{}: No vod found".format(user))
             else:
-                print("{}: No vod found".format(user))
-        else:
-            print("{}: Unable to find channel".format(user))
+                print("{}: Unable to find channel".format(user))
+    else:
+        print("Error getting vod clip is from")
     input("Press Enter to continue...")
 else:
-    if 'message' in clip:
-        print(clip['message'])
-    else:
-        print('Error reading clip. Try again in a bit. The vod may not be available')
+    print('Error reading clip. Try again in a bit. The vod may not be available')
     input("Press Enter to continue...")
     

@@ -1,4 +1,4 @@
-secrets.py
+secret.py
 __pycache__/
 venv/
 dist/

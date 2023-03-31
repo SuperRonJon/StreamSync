@@ -1,6 +1,7 @@
 from dateutil import parser
 from TwitchClient import TwitchClient
-from secrets import client_id as id, oauth_token as oauth
+from secret import client_id as id, oauth_token as oauth
+from isodate import parse_duration
 
 import datetime
 
@@ -29,7 +30,8 @@ def get_timestamp_for_streamer(streamer, clip_time):
 
     for vod in streamer_vods:
         start_time = parser.parse(vod['created_at'])
-        end_time = start_time + datetime.timedelta(seconds=vod['length'])
+        vod_length = parse_duration("PT" + vod['duration'].upper()).seconds
+        end_time = start_time + datetime.timedelta(seconds=vod_length)
         if(start_time < clip_time and clip_time < end_time):
             found_vod = vod
             break
@@ -41,7 +43,7 @@ def get_timestamp_for_streamer(streamer, clip_time):
         hours = int(offset / 3600)
         minutes = int((offset / 60) % 60)
         seconds = int(offset % 60)
-        output_url = "https://www.twitch.tv/videos/{}?t={}h{}m{}s".format(found_vod['_id'][1:], hours, minutes, seconds)
+        output_url = "https://www.twitch.tv/videos/{}?t={}h{}m{}s".format(found_vod['id'], hours, minutes, seconds)
         return output_url
     else:
         return ""
@@ -49,9 +51,9 @@ def get_timestamp_for_streamer(streamer, clip_time):
 
 clip_slug = input("Enter clip slug: ")
 clip = client.get_clip(clip_slug)
-if not 'error' in clip and clip['vod'] is not None:
-    offset = clip['vod']['offset']
-    op_vod = client.get_video(clip['vod']['id'])
+if not 'error' in clip and clip['video_id']:
+    offset = clip['vod_offset']
+    op_vod = client.get_video(clip['video_id'])
     clip_time = get_time_from_offset(op_vod, offset)
 
     new_users = input("Enter streamers: ")
@@ -70,6 +72,6 @@ else:
     if 'message' in clip:
         print(clip['message'])
     else:
-        print('Error reading clip. Try agian in a bit.')
+        print('Error reading clip. Try again in a bit. The vod may not be available')
     input("Press Enter to continue...")
     

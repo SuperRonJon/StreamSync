@@ -23,7 +23,14 @@ def get_time_from_offset(video_id, offset):
 
 # Returns the real-world time that the clip occurred at, or None if clip is not found
 # @param clip_slug: twitch clip slug string
-def get_time_from_clip(clip_slug):
+def get_time_from_clip(clip_string):
+    clip_slug = None
+    if clip_string.startswith("https://clips.twitch.tv/"):
+        clip_slug = re.search(r"clips\.twitch\.tv\/(.*)", clip_string).group(1)
+    elif clip_string.startswith("https://www.twitch.tv/"):
+        clip_slug = re.search(r"\/clip\/(.*)", clip_string).group(1)
+    else:
+        clip_slug = clip_string
     clip = client.get_clip(clip_slug)
     if clip is not None and clip['video_id']:
         offset = clip['vod_offset']
@@ -88,22 +95,28 @@ def get_timestamp_for_streamer(streamer, clip_time):
         return ""
 
 
-url = input("Enter clip slug or timestamped vod url: ")
-clip_time = get_time_from_input(url)
-if clip_time is not None:
-    new_users = input("Enter streamers: ")
-    user_list = new_users.split()
-    for user in user_list:
-        output = get_timestamp_for_streamer(user, clip_time)
-        if output is not None:
-            if output:
-                print("{}: {}".format(user, output))
+stop = False
+print('Enter "exit" to quit.')
+
+while not stop:
+    url = input("Enter clip slug or timestamped vod url: ")
+    if url.lower() == "exit":
+        stop = True
+        break
+    clip_time = get_time_from_input(url)
+    if clip_time is not None:
+        new_users = input("Enter streamers: ")
+        user_list = new_users.split()
+        for user in user_list:
+            output = get_timestamp_for_streamer(user, clip_time)
+            if output is not None:
+                if output:
+                    print("{}: {}".format(user, output))
+                else:
+                    print("{}: No vod found".format(user))
             else:
-                print("{}: No vod found".format(user))
-        else:
-            print("{}: Unable to find channel".format(user))
-else:
-    print("Error getting original vod/clip")
-input("Press Enter to continue...")
+                print("{}: Unable to find channel".format(user))
+    else:
+        print("Error getting original vod/clip")
 
 

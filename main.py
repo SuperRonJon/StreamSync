@@ -5,6 +5,7 @@ from isodate import parse_duration
 
 import datetime
 import re
+import sys
 
 
 client = TwitchClient(id, oauth)
@@ -95,28 +96,47 @@ def get_timestamp_for_streamer(streamer, clip_time):
         return ""
 
 
-stop = False
-print('Enter "exit" to quit.')
+if __name__ == "__main__":
+    if len(sys.argv) <= 1:
+        stop = False
+        print('Enter "exit" to quit.')
 
-while not stop:
-    url = input("Enter clip slug or timestamped vod url: ")
-    if url.lower() == "exit":
-        stop = True
-        break
-    clip_time = get_time_from_input(url)
-    if clip_time is not None:
-        new_users = input("Enter streamers: ")
-        user_list = new_users.split()
-        for user in user_list:
-            output = get_timestamp_for_streamer(user, clip_time)
-            if output is not None:
-                if output:
-                    print("{}: {}".format(user, output))
-                else:
-                    print("{}: No vod found".format(user))
+        while not stop:
+            url = input("Enter clip slug or timestamped vod url: ")
+            if url.lower() == "exit":
+                stop = True
+                break
+            clip_time = get_time_from_input(url)
+            if clip_time is not None:
+                new_users = input("Enter streamers: ")
+                user_list = new_users.split()
+                for user in user_list:
+                    output = get_timestamp_for_streamer(user, clip_time)
+                    if output is not None:
+                        if output:
+                            print("{}: {}".format(user, output))
+                        else:
+                            print("{}: No vod found".format(user))
+                    else:
+                        print("{}: Unable to find channel".format(user))
             else:
-                print("{}: Unable to find channel".format(user))
-    else:
-        print("Error getting original vod/clip")
+                print("Error getting original vod/clip")
+    elif len(sys.argv) >= 3:
+        url = sys.argv[1]
+        user_list = sys.argv[2:]
+        clip_time = get_time_from_input(url)
+        if clip_time is not None:
+            for user in user_list:
+                output = get_timestamp_for_streamer(user, clip_time)
+                if output is not None:
+                    if output:
+                        print("{}: {}".format(user, output))
+                    else:
+                        print("{}: No vod found".format(user))
+                else:
+                    print("{}: Unable to find channel".format(user))
+        else:
+            print("Error getting original vod/clip")
+
 
 

@@ -97,10 +97,14 @@ def get_timestamp_for_streamer(streamer, clip_time):
 
 def get_matches_for_all_streamers(streamer_list, clip_string):
     clip_time = get_time_from_input(clip_string)
-    results = {}
+    results = []
     for streamer in streamer_list:
         match = get_timestamp_for_streamer(streamer, clip_time)
-        results[streamer] = match
+        current_result = {
+            "streamer": streamer,
+            "result": match 
+        }
+        results.append(current_result)
     return results
 
 if __name__ == "__main__":

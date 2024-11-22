@@ -17,7 +17,7 @@
 {% if has_results %}
 <ul>
     {% for result in results %}
-    <li>{{ result[0] }}: <a href="{{ result[1] }}">{{ result[1] }}</a></li>
+    <li>{{ result['streamer'] }}: <a href="{{ result['result'] }}">{{ result['result'] }}</a></li>
     {% endfor %}
 </ul>
 {% endif %}

@@ -21,8 +21,7 @@ def sync():
     clip_input = request.form['url']
     streamers = request.form['streamers'].split()
     results = get_matches_for_all_streamers(streamers, clip_input)
-    list_results = list(results.items())
-    return render_template('search.html', has_results=True, results=list_results)
+    return render_template('search.html', has_results=True, results=results)
     
 
 if __name__ == '__main__':

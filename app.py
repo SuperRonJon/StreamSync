@@ -16,12 +16,12 @@ def api_sync():
     results = get_matches_for_all_streamers(streamers, clip_input)
     return jsonify(results)
 
-@app.route('/sync', methods=['POST'])
+@app.route('/sync', methods=['GET'])
 def sync():
-    clip_input = request.form['url']
-    streamers = request.form['streamers'].split()
+    clip_input = request.args['url']
+    streamers = request.args['streamers'].split()
     results = get_matches_for_all_streamers(streamers, clip_input)
-    return render_template('search.html', has_results=True, results=results)
+    return render_template('search.html', has_results=True, results=results, original_input=clip_input)
     
 
 if __name__ == '__main__':

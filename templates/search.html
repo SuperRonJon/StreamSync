@@ -2,7 +2,7 @@
 {% block content %}
 <div class="container">
     <h1>StreamSync</h1>
-    <form action="/sync" method="POST">
+    <form action="/sync" method="GET">
         <label for="url">Clip slug/Timestamp</label>
         <input type="text" name="url" id="url">
 
@@ -16,6 +16,7 @@
 
 {% if has_results %}
 <ul>
+    <li>Original Input: {{ original_input }}</li>
     {% for result in results %}
     <li>{{ result['streamer'] }}: <a href="{{ result['result'] }}">{{ result['result'] }}</a></li>
     {% endfor %}

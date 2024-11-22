@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h1>StreamSync</h1>
+    <form action="/sync" method="POST">
+        <label for="url">Clip slug/Timestamp</label>
+        <input type="text" name="url" id="url">
+
+        <label for="streamers">Streamers</label>
+        <input type="text" name="streamers" id="streamers">
+        <div>
+            <input type="submit">
+        </div>
+    </form>
+
+
+{% if has_results %}
+<ul>
+    {% for result in results %}
+    <li>{{ result[0] }}: <a href="{{ result[1] }}">{{ result[1] }}</a></li>
+    {% endfor %}
+</ul>
+{% endif %}
+</div>
+{% endblock %}

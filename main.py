@@ -72,7 +72,7 @@ def get_time_from_input(url):
 def get_timestamp_for_streamer(streamer, clip_time):
     streamer_vods = client.get_user_vods(streamer)
     if streamer_vods is None:
-        return None
+        return f"Channel {streamer} not found."
     found_vod = None
 
     for vod in streamer_vods:
@@ -93,8 +93,15 @@ def get_timestamp_for_streamer(streamer, clip_time):
         output_url = "https://www.twitch.tv/videos/{}?t={}h{}m{}s".format(found_vod['id'], hours, minutes, seconds)
         return output_url
     else:
-        return ""
+        return "No vod found"
 
+def get_matches_for_all_streamers(streamer_list, clip_string):
+    clip_time = get_time_from_input(clip_string)
+    results = {}
+    for streamer in streamer_list:
+        match = get_timestamp_for_streamer(streamer, clip_time)
+        results[streamer] = match
+    return results
 
 if __name__ == "__main__":
     if len(sys.argv) <= 1:
@@ -137,6 +144,5 @@ if __name__ == "__main__":
                     print("{}: Unable to find channel".format(user))
         else:
             print("Error getting original vod/clip")
-
 
 

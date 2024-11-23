@@ -1,6 +1,6 @@
 import os
 from flask import Flask, jsonify, request, render_template
-from main import get_matches_for_all_streamers
+from streamsync import get_matches_for_all_streamers
 
 app = Flask(__name__)
 

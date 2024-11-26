@@ -22,9 +22,9 @@ def sync():
         clip_input = request.args['url']
         streamers = request.args['streamers'].split()
     except Exception as e:
-        return render_template("search.html", has_results=False, original_input="")
+        return render_template("search.html", has_results=False, original_input="", streamer_list="")
     results = get_matches_for_all_streamers(streamers, clip_input)
-    return render_template('search.html', has_results=True, results=results, original_input=clip_input)
+    return render_template('search.html', has_results=True, results=results, original_input=clip_input, streamer_list=request.args['streamers'])
     
 
 if __name__ == '__main__':

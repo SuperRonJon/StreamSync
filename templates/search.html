@@ -1,15 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container">
-    <h1>StreamSync</h1>
+    <h1>RonJon's StreamSync</h1>
     <form action="/sync" method="GET">
         <label for="url">Clip slug/Timestamp</label>
         <input type="text" name="url" id="url" value="{{original_input}}">
 
         <label for="streamers">Streamers</label>
-        <input type="text" name="streamers" id="streamers">
+        <input type="text" name="streamers" id="streamers" value="{{streamer_list}}">
         <div>
-            <input type="submit">
+            <input class="button" type="submit">
         </div>
     </form>
 

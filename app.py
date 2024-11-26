@@ -1,12 +1,12 @@
 import os
-from flask import Flask, jsonify, request, render_template
+from flask import Flask, jsonify, request, render_template, redirect, url_for
 from streamsync import get_matches_for_all_streamers
 
 app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template("search.html", has_results=False)
+    return redirect(url_for("sync"))
 
 @app.route('/api/sync', methods = ['POST'])
 def api_sync():
@@ -18,8 +18,11 @@ def api_sync():
 
 @app.route('/sync', methods=['GET'])
 def sync():
-    clip_input = request.args['url']
-    streamers = request.args['streamers'].split()
+    try:
+        clip_input = request.args['url']
+        streamers = request.args['streamers'].split()
+    except Exception as e:
+        return render_template("search.html", has_results=False, original_input="")
     results = get_matches_for_all_streamers(streamers, clip_input)
     return render_template('search.html', has_results=True, results=results, original_input=clip_input)
     

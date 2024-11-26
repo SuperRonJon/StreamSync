@@ -4,7 +4,7 @@
     <h1>StreamSync</h1>
     <form action="/sync" method="GET">
         <label for="url">Clip slug/Timestamp</label>
-        <input type="text" name="url" id="url">
+        <input type="text" name="url" id="url" value="{{original_input}}">
 
         <label for="streamers">Streamers</label>
         <input type="text" name="streamers" id="streamers">
@@ -16,7 +16,6 @@
 
 {% if has_results %}
 <ul>
-    <li>Original Input: {{ original_input }}</li>
     {% for result in results %}
     <li>{{ result['streamer'] }}: <a href="{{ result['result'] }}">{{ result['result'] }}</a></li>
     {% endfor %}

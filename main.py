@@ -1,5 +1,5 @@
 import sys
-from streamsync import get_matches_for_all_streamers
+import StreamSync
 
 if __name__ == "__main__":
     if len(sys.argv) <= 1:
@@ -14,7 +14,7 @@ if __name__ == "__main__":
             user_list = users.split()
             results = []
             try:
-                results = get_matches_for_all_streamers(user_list, url)
+                results = StreamSync.get_matches_for_all_streamers(user_list, url)
             except Exception:
                 print("Error reading clip.")
             for result in results:
@@ -25,7 +25,7 @@ if __name__ == "__main__":
         user_list = sys.argv[2:]
         results = []
         try:
-            results = get_matches_for_all_streamers(user_list, url)
+            results = StreamSync.get_matches_for_all_streamers(user_list, url)
         except Exception:
             print("Error reading clip.")
         for result in results:

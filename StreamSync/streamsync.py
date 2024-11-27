@@ -1,5 +1,5 @@
 from dateutil import parser
-from TwitchClient import TwitchClient
+from .TwitchClient import TwitchClient
 from secret import client_id as id, oauth_token as oauth
 from isodate import parse_duration
 

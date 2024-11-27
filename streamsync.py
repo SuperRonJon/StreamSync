@@ -28,7 +28,7 @@ def get_time_from_clip(clip_string):
     if clip_string.startswith("https://clips.twitch.tv/"):
         clip_slug = re.search(r"clips\.twitch\.tv\/(.*)", clip_string).group(1)
     elif clip_string.startswith("https://www.twitch.tv/"):
-        clip_slug = re.search(r"\/clip\/(.*)", clip_string).group(1)
+        clip_slug = re.search(r"\/clip\/(.*)\?", clip_string).group(1)
     else:
         clip_slug = clip_string
     clip = client.get_clip(clip_slug)

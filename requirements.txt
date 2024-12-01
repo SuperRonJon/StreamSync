@@ -2,3 +2,5 @@ requests
 python-dateutil
 isodate
 flask
+waitress
+gunicorn

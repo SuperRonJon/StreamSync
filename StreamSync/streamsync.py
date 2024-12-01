@@ -1,11 +1,16 @@
 from dateutil import parser
 from .TwitchClient import TwitchClient
-from secret import client_id as id, oauth_token as oauth
 from isodate import parse_duration
 
 import datetime
+import os
 import re
 
+try:
+    id = os.environ['CLIENT_ID']
+    oauth = os.environ['OAUTH_TOKEN']
+except KeyError:
+    from secret import client_id as id, oauth_token as oauth
 
 client = TwitchClient(id, oauth)
 

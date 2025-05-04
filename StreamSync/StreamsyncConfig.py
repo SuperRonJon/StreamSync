@@ -67,10 +67,10 @@ class StreamsyncConfig:
     @staticmethod
     def get_default_config_dir():
         if 'PROGRAMDATA' in os.environ:
-            return f'{os.environ['PROGRAMDATA']}/streamsync'
+            return f"{os.environ['PROGRAMDATA']}/streamsync"
         elif 'HOME' in os.environ:
-            return f'{os.environ['HOME']}/.config/streamsync'
+            return f"{os.environ['HOME']}/.config/streamsync"
         else:
             from pathlib import Path
-            return f'{str(Path.home())}/.config/streamsync'
+            return f"{str(Path.home())}/.config/streamsync"
             

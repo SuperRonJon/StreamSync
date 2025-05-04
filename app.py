@@ -28,7 +28,7 @@ def sync():
     return render_template('search.html', has_results=True, results=results, original_input=clip_input, streamer_list=request.args['streamers'])
     
 
-if __name__ == '__main__':
+def main():
     from StreamSync.StreamsyncConfig import StreamsyncConfig
     config = StreamsyncConfig()
 
@@ -60,8 +60,12 @@ if __name__ == '__main__':
     else:
         print(f"Found tokens in config file at {config.config_filepath}")
 
-
     StreamSync.init_client(config)
+
+
+main()
+
+if __name__ == '__main__':
     PORT = None
     try:
         PORT = os.environ['PORT']

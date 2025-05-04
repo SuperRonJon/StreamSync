@@ -4,4 +4,3 @@ dist/
 build/
 .vscode/
 *.spec
-secret.py

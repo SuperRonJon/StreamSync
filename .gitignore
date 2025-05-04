@@ -1,8 +1,6 @@
-secret.py
 __pycache__/
 venv/
 dist/
 build/
 .vscode/
-*.spec
 *.conf*

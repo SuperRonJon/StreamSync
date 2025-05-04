@@ -45,6 +45,24 @@ class StreamsyncConfig:
         if 'OAUTH_TOKEN' in twitch_auth:
             self.oauth_token = None if twitch_auth['OAUTH_TOKEN'] == 'NONE' else twitch_auth['OAUTH_TOKEN']
         return True
+    
+    def get_tokens_from_input(self):
+        self.client_id = input("Enter client id: ")
+        if self.client_id.lower() == "exit":
+            sys.exit()
+        self.client_secret = input("Enter client secret: ")
+        if self.client_secret.lower() == "exit":
+            sys.exit()
+        input_token = input("Enter oauth token if you have one, otherwise leave blank: ")
+        if input_token and not input_token.isspace():
+            self.oauth_token = input_token
+
+        if not self.client_id or not self.client_secret:
+            return False
+        elif self.client_id.isspace() or self.client_secret.isspace():
+            return False
+        else:
+            return True
 
     def export_config_file(self):
         config = configparser.ConfigParser()
@@ -72,9 +90,14 @@ class StreamsyncConfig:
                     "Set environment variables:\n\t" \
                     "TWITCHSYNC_ID with your client id\n\t" \
                     "TWITCHSYNC_SECRET with your client secret\n\t" \
-                    "TWITCHSYNC_TOKEN with your oauth token, if you have one. If not one will be generated for you.\n " \
-                    "Shutting down for now... Maybe in the future you can enter you tokens here :)")
-                sys.exit()
+                    "TWITCHSYNC_TOKEN with your oauth token, if you have one. If not one will be generated for you.\n" \
+                    "Or enter your tokens below, enter exit to abort.")
+                if not self.get_tokens_from_input():
+                    print("Failed to get tokens...")
+                    sys.exit()
+                else:
+                    print(f"Creating config file with given token at {self.config_filepath}...")
+                    self.export_config_file()
             else:
                 if not quiet:
                     print(f"Found tokens in environment, creating config file at {self.config_filepath}...")

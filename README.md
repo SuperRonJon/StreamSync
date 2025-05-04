@@ -24,11 +24,21 @@ To get one log into the twitch developer with your twitch account https://dev.tw
 
 Then once it is created click Manage -> New Secret and generate a new secret. Save this secret and the Client ID in a text file somewhere you will find them. Redirect url is not relevant, you can fill it out to your website, or this github page, etc.
 
-After getting your twitch information, before your first run, set the following environment variables:
+The program will ask for these 2 tokens on the first run.
+
+Now the program can be run with:
+
+`python -m twitchsync clip_url/slug/vod_timestamp streamer1 streamer2 streamer3`
+
+
+### Setting environment variables
+
+This section is optional to have credentials be auto-detected on first run rather than manually enter them in the CLI.
+
 
 (On Windows: Search->"Edit Environment Variables For Your Account"->New...)
 
-(On Mac/Linux `export TWITCHSYNC_ID=your client id && export TWITCHSYNC_SECRET=your client secret`)
+(On Mac/Linux run `export TWITCHSYNC_ID=your client id && export TWITCHSYNC_SECRET=your client secret`)
 
 TWITCHSYNC_ID=your client id
 

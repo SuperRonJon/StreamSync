@@ -3,16 +3,15 @@ from .TwitchClient import TwitchClient
 from isodate import parse_duration
 
 import datetime
-import os
 import re
 
-try:
-    id = os.environ['CLIENT_ID']
-    oauth = os.environ['OAUTH_TOKEN']
-except KeyError:
-    from secret import client_id as id, oauth_token as oauth
 
-client = TwitchClient(id, oauth)
+client = None
+
+def init_client(streamsync_config):
+    global client
+    if client is None:
+        client = TwitchClient(streamsync_config)
 
 
 # Returns the real-world time a moment in a video occurred at

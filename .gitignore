@@ -5,3 +5,4 @@ dist/
 build/
 .vscode/
 *.spec
+*.conf*

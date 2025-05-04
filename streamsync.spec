@@ -5,7 +5,7 @@ block_cipher = None
 
 
 a = Analysis(
-    ['streamsync/__main__.py'],
+    ['src/twitchsync/__main__.py'],
     pathex=[],
     binaries=[],
     datas=[],
@@ -28,7 +28,7 @@ exe = EXE(
     a.zipfiles,
     a.datas,
     [],
-    name='streamsync',
+    name='twitchsync',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,

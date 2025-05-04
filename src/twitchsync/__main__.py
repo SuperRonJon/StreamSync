@@ -1,11 +1,11 @@
 import sys
-import streamsync
+import twitchsync
 
 if __name__ == "__main__":
-    from streamsync.StreamsyncConfig import StreamsyncConfig
+    from twitchsync.StreamsyncConfig import StreamsyncConfig
     config = StreamsyncConfig()
     config.set_tokens(quiet=True)
-    streamsync.init_client(config)
+    twitchsync.init_client(config)
     if len(sys.argv) <= 1:
         stop = False
         print('Type "exit" to quit.')
@@ -18,7 +18,7 @@ if __name__ == "__main__":
             user_list = users.split()
             results = []
             try:
-                results = streamsync.get_matches_for_all_streamers(user_list, url)
+                results = twitchsync.get_matches_for_all_streamers(user_list, url)
             except Exception:
                 print("Error reading clip.")
             for result in results:
@@ -29,7 +29,7 @@ if __name__ == "__main__":
         user_list = sys.argv[2:]
         results = []
         try:
-            results = streamsync.get_matches_for_all_streamers(user_list, url)
+            results = twitchsync.get_matches_for_all_streamers(user_list, url)
         except Exception:
             print("Error reading clip.")
         for result in results:

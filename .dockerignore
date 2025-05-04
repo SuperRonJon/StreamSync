@@ -4,3 +4,4 @@ dist/
 build/
 .vscode/
 *.spec
+*.egg-info

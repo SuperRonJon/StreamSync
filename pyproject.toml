@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools >= 77.0.3"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "twitchsync"
+version = "2.0.1"
+authors = [
+  { name="Patrick Seute", email="patrick.seute@gmail.com" },
+]
+description = "Gets matching timestamps for multiple streamers from a single twitch clip or timestamp."
+readme = "README.md"
+requires-python = ">=3.9"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+license = "MIT"
+license-files = ["LICEN[CS]E*"]
+dependencies = [
+  "requests",
+  "python-dateutil",
+  "isodate"
+]
+
+[project.urls]
+Homepage = "https://github.com/SuperRonJon/StreamSync"
+Issues = "https://github.com/SuperRonJon/StreamSync/issues"

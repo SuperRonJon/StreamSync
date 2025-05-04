@@ -87,7 +87,7 @@ class StreamsyncConfig:
             print("Error, missing client id or client secret, both are required.")
             sys.exit()
         if self.oauth_token is None:
-            from streamsync.TwitchClient import refresh_token
+            from twitchsync.TwitchClient import refresh_token
             if not quiet:
                 print(f"No oauth token found, generating a new one...")
             new_token = refresh_token(self.client_id, self.client_secret)

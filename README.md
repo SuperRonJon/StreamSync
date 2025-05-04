@@ -28,12 +28,12 @@ After getting your twitch information, before your first run, set the following 
 
 (On Windows: Search->"Edit Environment Variables For Your Account"->New...)
 
-(On Mac/Linux `export STREAMSYNC_ID=your client id && export STREAMSYNC_SECRET=your client secret`)
+(On Mac/Linux `export TWITCHSYNC_ID=your client id && export TWITCHSYNC_SECRET=your client secret`)
 
-STREAMSYNC_ID=your client id
+TWITCHSYNC_ID=your client id
 
-STREAMSYNC_SECRET=your client secret
+TWITCHSYNC_SECRET=your client secret
 
 The environment variables do not need to be persistent, the credentials will be saved automatically and managed as necessary from now on.
 
-Now it can be run like this `python -m streamsync clip_url/slug/vod_timestamp streamer1 streamer2 streamer3`
+Now it can be run like this `python -m twitchsync clip_url/slug/vod_timestamp streamer1 streamer2 streamer3`

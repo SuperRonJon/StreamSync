@@ -20,11 +20,11 @@ class StreamsyncConfig:
             self.config_filepath = f"{self.config_directory}/streamsync.conf"
     
     def get_tokens_from_env(self):
-        if 'STREAMSYNC_TOKEN' in os.environ:
-            self.oauth_token = os.environ['STREAMSYNC_TOKEN']
+        if 'TWITCHSYNC_TOKEN' in os.environ:
+            self.oauth_token = os.environ['TWITCHSYNC_TOKEN']
         try:
-            self.client_id = os.environ['STREAMSYNC_ID']
-            self.client_secret = os.environ['STREAMSYNC_SECRET']
+            self.client_id = os.environ['TWITCHSYNC_ID']
+            self.client_secret = os.environ['TWITCHSYNC_SECRET']
         except KeyError:
             return False
         return True
@@ -70,9 +70,9 @@ class StreamsyncConfig:
             if not self.get_tokens_from_env():
                 print("No tokens found...\n" \
                     "Set environment variables:\n\t" \
-                    "STREAMSYNC_ID with your client id\n\t" \
-                    "STREAMSYNC_SECRET with your client secret\n\t" \
-                    "STREAMSYNC_TOKEN with your oauth token, if you have one. If not one will be generated for you.\n " \
+                    "TWITCHSYNC_ID with your client id\n\t" \
+                    "TWITCHSYNC_SECRET with your client secret\n\t" \
+                    "TWITCHSYNC_TOKEN with your oauth token, if you have one. If not one will be generated for you.\n " \
                     "Shutting down for now... Maybe in the future you can enter you tokens here :)")
                 sys.exit()
             else:

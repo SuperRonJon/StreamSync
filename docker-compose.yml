@@ -4,6 +4,6 @@ services:
     ports: 
       - "8080:8080"
     environment:
-      - STREAMSYNC_ID=client_id
-      - STREAMSYNC_SECRET=client_secret
-      - STREAMSYNC_TOKEN=oauth_token
+      - TWITCHSYNC_ID=client_id
+      - TWITCHSYNC_SECRET=client_secret
+      - TWITCHSYNC_TOKEN=oauth_token

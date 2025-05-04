@@ -1,6 +1,6 @@
 import os
 import sys
-import StreamSync
+import streamsync
 from flask import Flask, jsonify, request, render_template, redirect, url_for
 
 app = Flask(__name__)
@@ -14,7 +14,7 @@ def api_sync():
     data = request.get_json()
     clip_input = data['url']
     streamers = data['streamers']
-    results = StreamSync.get_matches_for_all_streamers(streamers, clip_input)
+    results = streamsync.get_matches_for_all_streamers(streamers, clip_input)
     return jsonify(results)
 
 @app.route('/sync', methods=['GET'])
@@ -24,16 +24,16 @@ def sync():
         streamers = request.args['streamers'].split()
     except Exception as e:
         return render_template("search.html", has_results=False, original_input="", streamer_list="")
-    results = StreamSync.get_matches_for_all_streamers(streamers, clip_input)
+    results = streamsync.get_matches_for_all_streamers(streamers, clip_input)
     return render_template('search.html', has_results=True, results=results, original_input=clip_input, streamer_list=request.args['streamers'])
     
 
 def main():
-    from StreamSync.StreamsyncConfig import StreamsyncConfig
+    from streamsync.StreamsyncConfig import StreamsyncConfig
     config = StreamsyncConfig()
     config.set_tokens()
 
-    StreamSync.init_client(config)
+    streamsync.init_client(config)
 
 
 main()

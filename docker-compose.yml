@@ -1,9 +1,9 @@
-version: '3'
 services:
   web: 
     build: .
     ports: 
       - "8080:8080"
     environment:
-      - CLIENT_ID=client-id
-      - OAUTH_TOKEN=oauth-token
+      - STREAMSYNC_ID=client_id
+      - STREAMSYNC_SECRET=client_secret
+      - STREAMSYNC_TOKEN=oauth_token

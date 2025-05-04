@@ -1,4 +1,4 @@
-# StreamSync
+# TwitchSync
 
 Syncs twitch clips with other streamers. 
 

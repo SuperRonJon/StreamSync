@@ -1,5 +1,6 @@
 import configparser
 import os
+import sys
 
 
 class StreamsyncConfig:
@@ -63,6 +64,42 @@ class StreamsyncConfig:
     
     def has_required_tokens(self):
         return self.client_id is not None and self.client_secret is not None
+    
+    def set_tokens(self, quiet=False):
+        if not self.get_tokens_from_file():
+            if not self.get_tokens_from_env():
+                print("No tokens found...\n" \
+                    "Set environment variables:\n\t" \
+                    "STREAMSYNC_ID with your client id\n\t" \
+                    "STREAMSYNC_SECRET with your client secret\n\t" \
+                    "STREAMSYNC_TOKEN with your oauth token, if you have one. If not one will be generated for you.\n " \
+                    "Shutting down for now... Maybe in the future you can enter you tokens here :)")
+                sys.exit()
+            else:
+                if not quiet:
+                    print(f"Found tokens in environment, creating config file at {self.config_filepath}...")
+                self.export_config_file()
+        else:
+            if not quiet:
+                print(f"Found tokens in config file at {self.config_filepath}")
+        
+        if self.client_id is None or self.client_secret is None:
+            print("Error, missing client id or client secret, both are required.")
+            sys.exit()
+        if self.oauth_token is None:
+            from StreamSync.TwitchClient import refresh_token
+            if not quiet:
+                print(f"No oauth token found, generating a new one...")
+            new_token = refresh_token(self.client_id, self.client_secret)
+            if new_token is not None:
+                if not quiet:
+                    print(f"Received new token {new_token} - Updating config file...")
+                self.oauth_token = new_token
+                self.export_config_file()
+            else:
+                print("Error getting new token...")
+                sys.exit()
+
 
     @staticmethod
     def get_default_config_dir():

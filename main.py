@@ -2,6 +2,10 @@ import sys
 import StreamSync
 
 if __name__ == "__main__":
+    from StreamSync.StreamsyncConfig import StreamsyncConfig
+    config = StreamsyncConfig()
+    config.set_tokens(quiet=True)
+    StreamSync.init_client(config)
     if len(sys.argv) <= 1:
         stop = False
         print('Type "exit" to quit.')

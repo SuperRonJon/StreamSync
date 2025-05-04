@@ -18,6 +18,7 @@ Supported input formats:
 
 ## Installation
 `pip install twitchsync`
+
 Requires a twitch developer application code. 
 
 To get one log into the twitch developer with your twitch account https://dev.twitch.tv/console Then regester a new application, with category Application Integration and Confidential client type. 
@@ -28,7 +29,11 @@ The program will ask for these 2 tokens on the first run.
 
 Now the program can be run with:
 
-`python -m twitchsync clip_url/slug/vod_timestamp streamer1 streamer2 streamer3`
+`python -m twitchsync clip_url/slug/vod_timestamp_url streamer1 streamer2 streamer3`
+
+or simply
+
+`twitchsync clip_url/slug/vod_timestamp_url streamer1 streamer2 streamer3`
 
 
 ### Setting environment variables
@@ -47,3 +52,7 @@ TWITCHSYNC_SECRET=your client secret
 The environment variables do not need to be persistent, the credentials will be saved automatically and managed as necessary from now on.
 
 Now it can be run like this `python -m twitchsync clip_url/slug/vod_timestamp streamer1 streamer2 streamer3`
+
+or simply
+
+`twitchsync clip_url/slug/vod_timestamp_url streamer1 streamer2 streamer3`

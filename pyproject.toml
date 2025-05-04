@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "twitchsync"
-version = "2.1.0"
+version = "2.1.1"
 authors = [
   { name="Patrick Seute", email="patrick.seute@gmail.com" },
 ]
@@ -22,6 +22,9 @@ dependencies = [
   "python-dateutil",
   "isodate"
 ]
+
+[project.scripts]
+twitchsync = "twitchsync:main_cli"
 
 [project.urls]
 Homepage = "https://github.com/SuperRonJon/StreamSync"

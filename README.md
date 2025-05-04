@@ -21,9 +21,9 @@ Supported input formats:
 
 Requires a twitch developer application code. 
 
-To get one log into the twitch developer console with your twitch account https://dev.twitch.tv/console Then regester a new application, with category Application Integration and Confidential client type. 
+To get one log into the twitch developer console with your twitch account https://dev.twitch.tv/console Then regester a new application, with category Application Integration and Confidential client type. Redirect url is not relevant, you can fill it out to your website, or this github page, etc.
 
-Then once it is created click Manage -> New Secret and generate a new secret. Save this secret and the Client ID in a text file somewhere you will find them. Redirect url is not relevant, you can fill it out to your website, or this github page, etc.
+Then once it is created click Manage -> New Secret and generate a new secret. Save this secret and the Client ID in a text file somewhere you will find them.
 
 The program will ask for these 2 tokens on the first run.
 

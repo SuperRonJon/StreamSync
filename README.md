@@ -31,11 +31,6 @@ Now the program can be run with:
 
 `python -m twitchsync clip_url/slug/vod_timestamp_url streamer1 streamer2 streamer3`
 
-or simply
-
-`twitchsync clip_url/slug/vod_timestamp_url streamer1 streamer2 streamer3`
-
-
 ### Setting environment variables
 
 This section is optional to have credentials be auto-detected on first run rather than manually enter them in the CLI.
@@ -52,7 +47,3 @@ TWITCHSYNC_SECRET=your client secret
 The environment variables do not need to be persistent, the credentials will be saved automatically and managed as necessary from now on.
 
 Now it can be run like this `python -m twitchsync clip_url/slug/vod_timestamp streamer1 streamer2 streamer3`
-
-or simply
-
-`twitchsync clip_url/slug/vod_timestamp_url streamer1 streamer2 streamer3`

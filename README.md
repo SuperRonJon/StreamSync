@@ -19,7 +19,17 @@ Supported input formats:
 ## Installation
 `pip install twitchsync`
 
-Requires a twitch developer application code. 
+For Mac & Linux there is an easy install script that will install the command to a private venv and symlink it onto your path for easy use. Requires python to be installed.
+
+```
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/SuperRonJon/TwitchSync/master/install-twitchsync-linux.sh)"
+```
+
+## Requirements
+
+Requires Python 3.9+
+
+Requires a twitch developer application client id & secret pair. 
 
 To get one log into the twitch developer console with your twitch account https://dev.twitch.tv/console Then regester a new application, with category Application Integration and Confidential client type. Redirect url is not relevant, you can fill it out to your website, or this github page, etc.
 

@@ -1,8 +1,8 @@
 import os
-import twitchsync
 from flask import Flask, jsonify, request, render_template, redirect, url_for
 
 app = Flask(__name__)
+twitchsync = None
 
 @app.route('/')
 def index():
@@ -28,11 +28,10 @@ def sync():
     
 
 def main():
-    from twitchsync.StreamsyncConfig import StreamsyncConfig
-    config = StreamsyncConfig()
-    config.set_tokens()
-
-    twitchsync.init_client(config)
+    from twitchsync import TwitchSync
+    global twitchsync
+    if twitchsync is None:
+        twitchsync = TwitchSync(quiet=False)
 
 
 main()

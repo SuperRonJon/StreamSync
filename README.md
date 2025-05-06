@@ -41,6 +41,14 @@ Now the program can be run with:
 
 `python -m twitchsync clip_url/slug/vod_timestamp_url streamer1 streamer2 streamer3`
 
+On the first run, the program will ask for your twitch application client credentials if it cannot find them. You can enter them here or by passing them as optional arguments on the first run like below.
+
+`python -m twitchsync --client_id <token> --client_secret <token>`
+
+Once you have set your tokens once the program will store them in a configuration file and you will not need to enter them again.
+
+You can also set up your configuration by setting up environment variables, explained in the following section.
+
 ### Setting environment variables
 
 This section is optional to have credentials be auto-detected on first run rather than manually enter them in the CLI.

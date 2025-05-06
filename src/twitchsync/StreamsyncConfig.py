@@ -2,22 +2,29 @@ import configparser
 import os
 import sys
 
+from twitchsync.TwitchClient import refresh_token
+
 
 class StreamsyncConfig:
-    def __init__(self, config_filepath=None):
+    def __init__(self, config_filepath=None, quiet=False):
         self.none = 'NONE'
         self.config_filepath = None
         self.config_directory = None
         self.client_id = None
         self.oauth_token = None
         self.client_secret = None
+        self.quiet = quiet
 
         if config_filepath is not None:
             self.config_filepath = config_filepath
             self.config_directory = os.path.dirname(self.config_filepath)
+            if not self.quiet:
+                print(f"Using custom filepath {self.config_filepath}")
         else:
             self.config_directory = self.get_default_config_dir()
             self.config_filepath = f"{self.config_directory}/twitchsync.conf"
+            if not self.quiet:
+                print(f"Using default config filepath {self.config_filepath}")
     
     def get_tokens_from_env(self):
         if 'TWITCHSYNC_TOKEN' in os.environ:
@@ -83,7 +90,7 @@ class StreamsyncConfig:
     def has_required_tokens(self):
         return self.client_id is not None and self.client_secret is not None
     
-    def set_tokens(self, quiet=False):
+    def auto_set_tokens(self):
         if not self.get_tokens_from_file():
             if not self.get_tokens_from_env():
                 print("No tokens found...\n" \
@@ -99,30 +106,45 @@ class StreamsyncConfig:
                     print(f"Creating config file with given token at {self.config_filepath}...")
                     self.export_config_file()
             else:
-                if not quiet:
+                if not self.quiet:
                     print(f"Found tokens in environment, creating config file at {self.config_filepath}...")
                 self.export_config_file()
         else:
-            if not quiet:
+            if not self.quiet:
                 print(f"Found tokens in config file at {self.config_filepath}")
         
         if self.client_id is None or self.client_secret is None:
             print("Error, missing client id or client secret, both are required.")
             sys.exit()
         if self.oauth_token is None:
-            from twitchsync.TwitchClient import refresh_token
-            if not quiet:
+            if not self.quiet:
                 print(f"No oauth token found, generating a new one...")
             new_token = refresh_token(self.client_id, self.client_secret)
             if new_token is not None:
-                if not quiet:
+                if not self.quiet:
                     print(f"Received new token {new_token} - Updating config file...")
                 self.oauth_token = new_token
                 self.export_config_file()
             else:
                 print("Error getting new token...")
                 sys.exit()
-
+    
+    def set_tokens(self, client_id, client_secret, oauth_token=None):
+        if client_id is None or client_secret is None:
+            return False
+        self.client_id = client_id
+        self.client_secret = client_secret
+        self.oauth_token = oauth_token
+        if self.oauth_token is None:
+            new_token = refresh_token(self.client_id, self.client_secret)
+            if new_token is not None:
+                if not self.quiet:
+                    print(f"Received new token {new_token} - Updating config file...")
+                self.oauth_token = new_token
+                self.export_config_file()
+            else:
+                print("Error getting new token...")
+                sys.exit()
 
     @staticmethod
     def get_default_config_dir():

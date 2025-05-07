@@ -65,3 +65,19 @@ TWITCHSYNC_SECRET=your client secret
 The environment variables do not need to be persistent, the credentials will be saved automatically and managed as necessary from now on.
 
 Now it can be run like this `python -m twitchsync clip_url/slug/vod_timestamp streamer1 streamer2 streamer3`
+
+# Importing as python module
+
+Twitchsync can also be imported as a python module to be used in custom code. An example using credentials from the default config file, same as the instructions above:
+
+```python
+from twitchsync import TwitchSync
+
+client = TwitchSync(quiet=True)
+clip_url = "https://www.twitch.tv/ladydima/clip/ColorfulIncredulousKumquatDxAbomb-rVq6FZsrpFKfBDIb"
+streamer_list = ["thebigmeech", "lt_custard", "ladydima"]
+
+matches = client.get_matches_for_all_streamers(streamer_list, clip_url)
+for match in matches:
+  print(f"{match["streamer"]}: {match["result"]}")
+```

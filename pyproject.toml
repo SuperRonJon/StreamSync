@@ -27,5 +27,5 @@ dependencies = [
 twitchsync = "twitchsync:main_cli"
 
 [project.urls]
-Homepage = "https://github.com/SuperRonJon/StreamSync"
-Issues = "https://github.com/SuperRonJon/StreamSync/issues"
+Homepage = "https://github.com/SuperRonJon/TwitchSync"
+Issues = "https://github.com/SuperRonJon/TwitchSync/issues"

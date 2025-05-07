@@ -5,6 +5,7 @@ from .StreamsyncConfig import StreamsyncConfig
 
 import datetime
 import re
+import sys
 
 
 class TwitchSync:
@@ -15,6 +16,7 @@ class TwitchSync:
         else:
             self.config.set_tokens(client_id, client_secret, oauth_token)
         self.twitchclient = TwitchClient(self.config)
+        sys.stdout.flush()
     
     # Returns the real-world time a moment in a video occurred at
     # @param video_id: id of the video to be searched

@@ -73,7 +73,7 @@ Twitchsync can also be imported as a python module to be used in custom code. An
 ```python
 from twitchsync import TwitchSync
 
-client = TwitchSync(quiet=True)
+client = TwitchSync()
 clip_url = "https://www.twitch.tv/ladydima/clip/ColorfulIncredulousKumquatDxAbomb-rVq6FZsrpFKfBDIb"
 streamer_list = ["thebigmeech", "lt_custard", "ladydima"]
 

@@ -74,10 +74,13 @@ Twitchsync can also be imported as a python module to be used in custom code. An
 from twitchsync import TwitchSync
 
 client = TwitchSync()
-clip_url = "https://www.twitch.tv/ladydima/clip/ColorfulIncredulousKumquatDxAbomb-rVq6FZsrpFKfBDIb"
-streamer_list = ["thebigmeech", "lt_custard", "ladydima"]
+clip_url = "https://www.twitch.tv/clip/or/vod/timestamp"
+streamer_list = ["streamer1", "streamer2", "streamer3"]
 
 matches = client.get_matches_for_all_streamers(streamer_list, clip_url)
 for match in matches:
   print(f"{match["streamer"]}: {match["result"]}")
+
+single_match = client.get_match_for_streamer("streamer1", clip_url)
+print(f"{single_match["streamer"]: single_match["result"]}")
 ```

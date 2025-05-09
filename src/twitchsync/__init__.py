@@ -14,11 +14,18 @@ def main_cli():
     parser.add_argument('--client_id', dest='client_id', default=None, metavar='TOKEN', help='Twitch application client id. Overrides finding from config file by default.')
     parser.add_argument('--client_secret', dest='client_secret', default=None, metavar='TOKEN', help='Twitch application client secret. Overrides finding from config file by default')
     parser.add_argument('--oauth_token', dest='oauth_token', default=None, metavar='TOKEN', help='Twitch application oauth token. Overrides finding from config file by default')
+    parser.add_argument('--no-save', dest='save', default=True, action='store_false', help='If twitch credentials are given on the command line this option will prevent a config file from being written from them.')
     parser.add_argument('-c', '--config', dest='custom_config_path', default=None, metavar='PATH', help='filepath to custom config file containing twitch client credentials.')
     args = parser.parse_args()
 
-    quiet = not args.verbose
-    twitchsync = TwitchSync(client_id = args.client_id, client_secret=args.client_secret, oauth_token=args.oauth_token, quiet=quiet, config_filepath=args.custom_config_path)
+    twitchsync = TwitchSync(
+        client_id = args.client_id, 
+        client_secret=args.client_secret, 
+        oauth_token=args.oauth_token, 
+        quiet=not args.verbose, 
+        config_filepath=args.custom_config_path, 
+        save=args.save
+    )
 
     if args.clip_url is None or args.streamers is None:
         stop = False

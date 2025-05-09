@@ -9,7 +9,7 @@ import sys
 
 
 class TwitchSync:
-    def __init__(self, client_id=None, client_secret=None, oauth_token=None, quiet=True, config_filepath=None):
+    def __init__(self, client_id=None, client_secret=None, oauth_token=None, quiet=True, config_filepath=None, save=True):
         self.config = StreamsyncConfig(config_filepath=config_filepath, quiet=quiet)
         if client_id is None or client_secret is None:
             self.config.auto_set_tokens()
@@ -96,6 +96,33 @@ class TwitchSync:
             return output_url
         else:
             return "No vod found"
+        
+    def get_all_timestamps_for_streamer(self, streamer, clip_time):
+        streamer_vods = self.twitchclient.get_user_vods(streamer)
+        if streamer_vods is None:
+            return f"Channel {streamer} not found."
+        found_vods = []
+
+        for vod in streamer_vods:
+            start_time = parser.parse(vod['created_at'])
+            vod_length = parse_duration("PT" + vod['duration'].upper()).seconds
+            end_time = start_time + datetime.timedelta(seconds=vod_length)
+            if(start_time <= clip_time and clip_time < end_time):
+                found_vods.append(vod)
+        
+        if len(found_vods) > 0:
+            output_urls = []
+            for found_vod in found_vods:
+                offset = (clip_time - parser.parse(found_vod['created_at'])).total_seconds()
+                hours = int(offset / 3600)
+                minutes = int((offset / 60) % 60)
+                seconds = int(offset % 60)
+                output_url = f"https://www.twitch.tv/videos/{found_vod['id']}?t={hours}h{minutes}m{seconds}s"
+                output_urls.append(output_url)
+            return output_urls
+        else:
+            return "No vods found"
+
 
     def get_matches_for_all_streamers(self, streamer_list, clip_string):
         clip_time = self.get_time_from_input(clip_string)

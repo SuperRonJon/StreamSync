@@ -129,7 +129,7 @@ class StreamsyncConfig:
                 print("Error getting new token...")
                 sys.exit()
     
-    def set_tokens(self, client_id, client_secret, oauth_token=None):
+    def set_tokens(self, client_id, client_secret, oauth_token=None, save=True):
         if client_id is None or client_secret is None:
             return False
         self.client_id = client_id
@@ -141,10 +141,13 @@ class StreamsyncConfig:
                 if not self.quiet:
                     print(f"Received new token {new_token} - Updating config file...")
                 self.oauth_token = new_token
-                self.export_config_file()
+                if save:
+                    self.export_config_file()
             else:
                 print("Error getting new token...")
                 sys.exit()
+        elif save:
+            self.export_config_file()
 
     @staticmethod
     def get_default_config_dir():

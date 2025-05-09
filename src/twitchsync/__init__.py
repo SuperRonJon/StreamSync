@@ -3,11 +3,13 @@ import argparse
 from .TwitchSync import TwitchSync
 from .StreamsyncConfig import StreamsyncConfig
 
+CURRENT_VERSION = '%(prog)s v2.1.4-pre1'
+
 def main_cli():    
     parser = argparse.ArgumentParser(prog='twitchsync', description='Sync Twitch clips with other streamers', usage='twitchsync [--version] [-v] clip_url [streamers ...]')
     parser.add_argument('clip_url', nargs="?", default=None, help='Clip URL/Clip Slug/VOD Timestamp URL')
     parser.add_argument('streamers', nargs='*', default=None, help='Space separated list of streamers to get timestamps for')
-    parser.add_argument('--version', action='version', version='%(prog)s v2.1.3')
+    parser.add_argument('--version', action='version', version=f'{CURRENT_VERSION}')
     parser.add_argument('-v', '--verbose', dest='verbose', action='store_true', default=False, help='Print details while running, mostly about discovering twitch credentials')
     parser.add_argument('--client_id', dest='client_id', default=None, metavar='TOKEN', help='Twitch application client id. Overrides finding from config file by default.')
     parser.add_argument('--client_secret', dest='client_secret', default=None, metavar='TOKEN', help='Twitch application client secret. Overrides finding from config file by default')

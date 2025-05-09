@@ -11,11 +11,12 @@ def main_cli():
     parser.add_argument('streamers', nargs='*', default=None, help='Space separated list of streamers to get timestamps for')
     parser.add_argument('--version', action='version', version=f'{CURRENT_VERSION}')
     parser.add_argument('-v', '--verbose', dest='verbose', action='store_true', default=False, help='Print details while running, mostly about discovering twitch credentials')
-    parser.add_argument('--client_id', dest='client_id', default=None, metavar='TOKEN', help='Twitch application client id. Overrides finding from config file by default.')
-    parser.add_argument('--client_secret', dest='client_secret', default=None, metavar='TOKEN', help='Twitch application client secret. Overrides finding from config file by default')
-    parser.add_argument('--oauth_token', dest='oauth_token', default=None, metavar='TOKEN', help='Twitch application oauth token. Overrides finding from config file by default')
-    parser.add_argument('--no-save', dest='save', default=True, action='store_false', help='If twitch credentials are given on the command line this option will prevent a config file from being written from them.')
-    parser.add_argument('-c', '--config', dest='custom_config_path', default=None, metavar='PATH', help='filepath to custom config file containing twitch client credentials.')
+    twitch_creds_group = parser.add_argument_group('credentials', 'Options for supplying/managing twitch client credentials.')
+    twitch_creds_group.add_argument('--client_id', dest='client_id', default=None, metavar='TOKEN', help='Twitch application client id. Overrides finding from config file by default.')
+    twitch_creds_group.add_argument('--client_secret', dest='client_secret', default=None, metavar='TOKEN', help='Twitch application client secret. Overrides finding from config file by default')
+    twitch_creds_group.add_argument('--oauth_token', dest='oauth_token', default=None, metavar='TOKEN', help='Twitch application oauth token. Overrides finding from config file by default')
+    twitch_creds_group.add_argument('--no-save', dest='save', default=True, action='store_false', help='If twitch credentials are given on the command line this option will prevent a config file from being written from them.')
+    twitch_creds_group.add_argument('-c', '--config', dest='custom_config_path', default=None, metavar='PATH', help='filepath to custom config file containing twitch client credentials.')
     args = parser.parse_args()
 
     twitchsync = TwitchSync(

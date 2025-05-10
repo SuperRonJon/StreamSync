@@ -3,7 +3,7 @@ import argparse
 from .TwitchSync import TwitchSync
 from .StreamsyncConfig import StreamsyncConfig
 
-CURRENT_VERSION = '%(prog)s v2.1.4-pre1'
+CURRENT_VERSION = '%(prog)s v2.1.4'
 
 def main_cli():    
     parser = argparse.ArgumentParser(prog='twitchsync', description='Sync Twitch clips with other streamers', usage='twitchsync [--version] [-v] clip_url [streamers ...]')
